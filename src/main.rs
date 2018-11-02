@@ -19,6 +19,7 @@ fn main() {
             }))
             .middleware(Logger::default())
             .middleware(Logger::new("%a %{User-Agent}i"))
+            .handler("/m", StaticFiles::new("static").unwrap())
             .handler("/", StaticFiles::new("client/build/").unwrap())
     }).bind("127.0.0.1:8088")
     .unwrap()
