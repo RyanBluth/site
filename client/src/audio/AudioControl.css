@@ -5,7 +5,6 @@
 }
 
 .AudioControl-progress{
-    height: 50px;
-    background-color: red;
+    width: 0;
 }
 

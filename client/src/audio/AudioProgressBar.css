@@ -1,0 +1,26 @@
+
+.AudioProgressBar{
+    height: 5px;
+    background-color: red;
+}
+
+.AudioProgressBar-progress{
+    height: 5px;
+    width: 0;
+    background-color: purple;
+}
+
+.AudioProgressBar-handle{
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    float: right;
+    margin-top: -5px;
+    margin-right: -7px;
+    background-color: blue;
+    cursor: grab;
+}
+
+.AudioProgressBar-handle:active{
+    cursor: grabbing;
+}

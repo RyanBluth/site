@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
+import AudioProgressBar from './AudioProgressBar';
+
 import './AudioControl.css';
 
 class AudioControl extends Component {
     constructor(props) {
         super(props);
         this.audioRef = React.createRef();
-        this.onClick = this.onClick.bind(this);
         this.duration = 0;
-        this.state = {
-            progressStyle: {
-                width: "50px"
-            }
-        }
-
+        this.state = {};
     }
 
     render() {
         return (
-            <div className="AudioControl" onClick={this.onClick}>
-                <div className="AudioControl-progress" style={this.state.progressStyle}>DDD</div>
+            <div className="AudioControl" onClick={this.onClick.bind(this)}>
+                <AudioProgressBar className="AudioControl-progress" progress={this.state.progress}></AudioProgressBar>
                 <audio className="AudioControl-innerAudio" ref={this.audioRef}>
                     <source src="http://localhost:8088/m/1.mp3" type="audio/mpeg" />
                     Your browser does not support the audio element.
@@ -30,21 +26,31 @@ class AudioControl extends Component {
     componentDidMount() {
 
         this.audioRef.current.onloadedmetadata = (metadata) => {
-            console.log(metadata);
             this.duration = metadata.srcElement.duration * 1000;
         }
 
         this.audioRef.current.ontimeupdate = (event) => {
             this.setState({
-                progressStyle: {
-                    width: 300 * (event.timeStamp / this.duration) + "px"
-                }
+                progress:(event.timeStamp / this.duration) * 100
             });
         }
     }
 
     onClick() {
-        this.audioRef.current.play();
+        if (this.audioRef.current.paused) {
+            this.audioRef.current.play();
+        } else {
+            this.audioRef.current.pause();
+        }
+
+    }
+
+    updateProgress(timeStamp) {
+        this.setState({
+            progressStyle: {
+                width: (timeStamp / this.duration) * 100 + "%"
+            }
+        });
     }
 }
 
